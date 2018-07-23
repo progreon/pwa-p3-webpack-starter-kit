@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title><%= htmlWebpackPlugin.options.config.app.name %></title>
+    <meta name="description" content="<%= htmlWebpackPlugin.options.config.app.description %>">
+
+    <base href="<%= htmlWebpackPlugin.options.config.app.basePath %>">
+
+    <script>
+      window.MyAppGlobals = {
+        rootPath: '<%= htmlWebpackPlugin.options.config.app.basePath %>'
+      };
+    </script>
+
+    <% if (htmlWebpackPlugin.options.config.app.transpile) { %>
+    <!-- Load the elements adapter for es5 transpiled code -->
+    <script src="scripts/wc/custom-elements-es5-adapter.js"></script>
+    <% } %>
+
+    <!-- Add any global styles for body, document, etc. -->
+    <!-- <style>
+      body {
+        margin: 0;
+        font-family: "Roboto", "Noto", sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #eeeeee;
+      }
+    </style> -->
+  </head>
+  <body>
+    <my-app appTitle="<%= htmlWebpackPlugin.options.config.app.name %>"></my-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+  </body>
+</html>
