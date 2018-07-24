@@ -44,6 +44,11 @@ module.exports = (production) => ({
     autoprefix: env.APP_AUTOPREFIX || production,
   },
 
+  settings: {
+    // The minimum width for when the app is marked as being wide
+    wideWidth: env.SETTING_WIDE_WIDTH || "640px",
+  },
+
   // Webpack dev server settings
   devServer: {
     // The port where webpack dev server should serve the app content

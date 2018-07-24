@@ -11,7 +11,8 @@
 
     <script>
       window.MyAppGlobals = {
-        rootPath: '<%= htmlWebpackPlugin.options.config.app.basePath %>'
+        rootPath: '<%= htmlWebpackPlugin.options.config.app.basePath %>',
+        wideWidth: '<%= htmlWebpackPlugin.options.config.settings.wideWidth %>'
       };
     </script>
 
@@ -21,7 +22,7 @@
     <% } %>
 
     <!-- Add any global styles for body, document, etc. -->
-    <!-- <style>
+    <style>
       body {
         margin: 0;
         font-family: "Roboto", "Noto", sans-serif;
@@ -29,7 +30,7 @@
         min-height: 100vh;
         background-color: #eeeeee;
       }
-    </style> -->
+    </style>
   </head>
   <body>
     <my-app appTitle="<%= htmlWebpackPlugin.options.config.app.name %>"></my-app>

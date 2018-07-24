@@ -1,5 +1,6 @@
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
+export const UPDATE_WIDE_STATE = 'UPDATE_WIDE_STATE';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
@@ -65,6 +66,10 @@ export const updateOffline = (offline) => (dispatch, getState) => {
 };
 
 export const updateLayout = (wide) => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_WIDE_STATE,
+    wide
+  });
   if (getState().app.drawerOpened) {
     dispatch(updateDrawerState(false));
   }

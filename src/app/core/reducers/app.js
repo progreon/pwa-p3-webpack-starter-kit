@@ -13,6 +13,7 @@ import {
   UPDATE_OFFLINE,
   OPEN_SNACKBAR,
   CLOSE_SNACKBAR,
+  UPDATE_WIDE_STATE,
   UPDATE_DRAWER_STATE
 } from 'CoreActions/app';
 
@@ -27,6 +28,11 @@ const app = (state = {drawerOpened: false}, action) => {
       return {
         ...state,
         offline: action.offline
+      };
+    case UPDATE_WIDE_STATE:
+      return {
+        ...state,
+        wideLayout: action.wide
       };
     case UPDATE_DRAWER_STATE:
       return {
