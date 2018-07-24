@@ -1,3 +1,4 @@
+const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./common.config.js');
 const config = require('../app.config')(false);
@@ -8,12 +9,12 @@ module.exports = merge(common(config), {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: './dist'
+    contentBase: path.resolve(__dirname, '../..', config.outputDir)
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css',
-      chunkFilename: '[id].[chunkhash].css'
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ],
   module: {

@@ -10,16 +10,15 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = (config) => ({
   entry: {
-    // app
-    app: './src/main.js',
     // polyfills
     ...config.app.transpile && { babel: 'babel-polyfill' }, // IE11
-    'wc/webcomponents-loader': path.resolve(__dirname, '../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader'), // IE11, Edge, Firefox, Safari<11
-    polyfills: './src/polyfills.js'
+    polyfills: './src/polyfills.js',
+    // app
+    app: './src/main.js'
   },
   output: {
-    filename: 'scripts/[name].[chunkhash].bundle.js',
-    chunkFilename: 'scripts/components/[id].[chunkhash].js',
+    filename: 'scripts/[name].bundle.js',
+    chunkFilename: 'scripts/[id].js',
     path: path.resolve(__dirname, '../..', config.outputDir)
   },
   resolve: {
@@ -90,6 +89,11 @@ module.exports = (config) => ({
         flatten: true,
       },
       // WebComponents Polyfills
+      {
+        from: path.resolve(__dirname, '../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js'),
+        to: './scripts/wc',
+        flatten: true,
+      },
       {
         from: path.resolve(__dirname, '../../node_modules/@webcomponents/webcomponentsjs/bundles/**/*'),
         to: './scripts/wc/bundles',

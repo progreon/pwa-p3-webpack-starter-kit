@@ -12,7 +12,7 @@ module.exports = merge(common(config), {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: './dist'
+    contentBase: path.resolve(__dirname, '../..', config.outputDir)
   },
   plugins: [
     new UglifyJSPlugin({
@@ -45,8 +45,8 @@ module.exports = merge(common(config), {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css',
-      chunkFilename: '[id].[chunkhash].css'
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ],
   module: {

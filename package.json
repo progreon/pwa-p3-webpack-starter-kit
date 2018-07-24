@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "serve": "yarn serve:dev",
-    "serve:dev": "webpack-dev-server --open --config config/webpack/dev.config.js",
-    "serve:prod": "webpack-dev-server --open --config config/webpack/prod.config.js",
+    "serve:dev": "webpack-dev-server --config config/webpack/dev.config.js",
+    "serve:prod": "webpack-dev-server --config config/webpack/prod.config.js",
     "start": "yarn start:prod",
     "start:dev": "yarn build:dev && http-server dist -p 5000 -c-1",
     "start:prod": "yarn build:prod && http-server dist -p 5000 -c-1",

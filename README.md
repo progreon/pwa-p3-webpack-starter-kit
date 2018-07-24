@@ -13,11 +13,14 @@ $ git clone git@github.com:progreon/pwa-p3-webpack-starter-kit.git pwa-p3-webpac
 $ yarn
 ```
 ## Scripts
-For each of these scripts you can add `:dev` or `:prod` to run these for development or production
+For each of these scripts you can add `:dev` or `:prod` to run these for development or production:
+```shell
+$ yarn <script>[:dev|:prod] [options]
+```
 ### Serving
 *default: dev*
 ```shell
-$ yarn serve
+$ yarn serve --open
 ```
 Mainly used during development, rebuilds automatically on each save and the browser will refresh automatically.
 *NOTE: if a service worker is active, you'll have to refresh again manually for the new cached modules to be loaded*
