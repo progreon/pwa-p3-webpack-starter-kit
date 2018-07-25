@@ -36,6 +36,7 @@ module.exports = (production) => ({
     description: env.APP_DESCRIPTION || 'My App description',
 
     // Whether to transpile the app for older browsers or not.
+    // TODO: fix compiling webcomponents-loader.js: add as entry & fix webpack-dev-server to load it correcetly
     transpile: env.APP_TRANSPILE || false,
 
     // Whether to autoprefix the css rules for the app based on you "browserslist"

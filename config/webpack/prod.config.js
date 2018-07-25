@@ -51,6 +51,16 @@ module.exports = merge(common(config), {
   ],
   module: {
     rules: [
+      ...config.app.transpile ? [{
+        test: /\.js$/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: [
+            'syntax-dynamic-import',
+          ],
+        }
+      }] : [],
       {
         test: /\.css$/,
         use: [

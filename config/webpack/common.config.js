@@ -11,7 +11,7 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 module.exports = (config) => ({
   entry: {
     // polyfills
-    ...config.app.transpile && { babel: 'babel-polyfill' }, // IE11
+    ...config.app.transpile && { babel: '@babel/polyfill' }, // IE11
     polyfills: './src/polyfills.js',
     // app
     app: './src/main.js'
