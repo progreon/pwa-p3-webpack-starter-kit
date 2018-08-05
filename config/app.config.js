@@ -48,6 +48,14 @@ module.exports = (production) => ({
   settings: {
     // The minimum width for when the app is marked as being wide
     wideWidth: env.SETTING_WIDE_WIDTH || "640px",
+
+    // The keys used for the local storage
+    localStorageKeys: {
+      copilotUser: "copilot-user",
+      profileToken: "profile-token",
+      profileRefreshToken: "profile-refresh-token",
+      profileAuthorities: "profile-authorities"
+    }
   },
 
   // Webpack dev server settings

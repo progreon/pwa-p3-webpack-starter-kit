@@ -22,6 +22,7 @@ module.exports = merge(common(config), {
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           'css-loader'
         ]
       }

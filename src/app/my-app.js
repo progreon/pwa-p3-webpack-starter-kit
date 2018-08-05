@@ -16,13 +16,13 @@ import '@polymer/app-layout/app-header/app-header';
 import '@polymer/app-layout/app-header-layout/app-header-layout';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
-import { menuIcon } from 'Shared/my-icons';
-import 'SharedComponents/snack-bar/snack-bar';
+import 'CoreComponents/snack-bar/snack-bar';
 
-import { printMe } from 'CoreComponents/print/print';
+// Image imports for this element
+import { barsIcon } from 'Shared/my-icons';
 
 // CSS imports for this element
-import { SharedStyles } from 'Shared/shared-styles';
+import { AppStyles } from 'Shared/app-styles';
 import * as style from 'App/my-app.css';
 
 // This element is connected to the Redux store.
@@ -37,85 +37,54 @@ import {
 } from 'CoreActions/app.js';
 
 class MyApp extends connect(store)(LitElement) {
-  _render({appTitle, _page, _drawerOpened, _snackbarOpened, _wideLayout, _offline}) {
-    const helloWorld = html`
-    ${SharedStyles}
-    <style>${style.toString()}</style>
-    <div class="hello">
-      Hello ${appTitle}!<br>
-      <button onclick="${printMe.bind(this)}">Click me and check the console!</button>
-    </div>
-    `;
+  _render({appTitle, _page, _pageList, _drawerOpened, _snackbarOpened, _wideLayout, _offline}) {
+    var linkList = [];
+    if (_pageList) {
+      _pageList.forEach(function(page) {
+        if (!page.is404) {
+          const a = html`<a selected?="${_page === page.name}" href="/${page.name}">${page.title}</a>`;
+          linkList.push(a);
+        }
+      });
+    }
     const template = html`
+      ${AppStyles}
       <style>
         :host {
+          --polymer-blue: #4285f4; /* TEMP */
+
           --app-drawer-width: 256px;
-          display: block;
 
-          --app-primary-color: #4285f4;
-          --app-secondary-color: black;
+          --app-profile-color: var(--app-color-grass);
+          --app-profile-color-light: var(--app-color-grass-light);
+
+          --app-primary-color: var(--app-color-white);
+          --app-secondary-color: var(--app-color-black);
           --app-dark-text-color: var(--app-secondary-color);
-          --app-light-text-color: white;
-          --app-section-even-color: #f7f7f7;
-          --app-section-odd-color: white;
+          --app-light-text-color: var(--app-color-white);
 
-          --app-header-background-color: var(--app-primary-color);
-          --app-header-text-color: var(--app-light-text-color);
+          --app-header-background-color: var(--app-color-white);
+          --app-header-text-color: var(--app-dark-text-color);
+          --app-header-height: var(--app-grid-7x);
 
-          --app-header-menu-background-color: #dddddd;
+          --app-header-menu-background-color: var(--app-color-slate);
           --app-header-menu-text-color: var(--app-dark-text-color);
           --app-header-menu-selected-color: var(--app-dark-text-color);
 
-          --app-drawer-background-color: #dddddd;
-          --app-drawer-text-color: var(--app-dark-text-color);
-          --app-drawer-selected-color: var(--app-dark-text-color);
+          --app-drawer-background-color: var(--app-color-black);
+          --app-drawer-text-color: var(--app-light-text-color);
+          --app-drawer-selected-color: var(--app-light-text-color);
 
-          --app-drawer-header-background-color: var(--app-primary-color);
-          --app-drawer-header-text-color: var(--app-dark-text-color);
-        }
+          --app-drawer-header-background-color: var(--app-color-granite);
+          --app-drawer-header-text-color: var(--app-light-text-color);
 
-        /* app-toolbar {
-          color: var(--app-header-text-color);
-          background-color: var(--app-primary-color);
-        } */
+          --app-footer-height: var(--app-grid-7x);
 
-        .toolbar {
-          color: var(--app-header-text-color);
-          background-color: var(--app-header-background-color);
-        }
-
-        .toolbar-top {
-        }
-
-        .toolbar-list {
-          display: none;
-          background-color: var(--app-header-menu-background-color);
-        }
-
-        .toolbar-list > a {
-          display: inline-block;
-          color: var(--app-header-menu-text-color);
-          text-decoration: none;
-          line-height: 30px;
-          padding: 4px 24px;
-        }
-
-        .toolbar-list > a[selected] {
-          color: var(--app-header-menu-selected-color);
-          border-bottom: 4px solid var(--app-header-menu-selected-color);
-        }
-
-        .menu-btn {
-          background: none;
-          border: none;
-          fill: var(--app-header-text-color);
-          cursor: pointer;
-          height: 44px;
-          width: 44px;
+          color: var(--app-dark-text-color);
         }
 
         .drawer {
-          /* color: var(--app-drawer-text-color); */
+          color: var(--app-drawer-text-color);
         }
 
         .drawer-top {
@@ -145,17 +114,82 @@ class MyApp extends connect(store)(LitElement) {
           border-bottom: 1px solid var(--app-drawer-selected-color);
         }
 
+        /* app-toolbar {
+          color: var(--app-header-text-color);
+          background-color: var(--app-primary-color);
+        } */
+
+        .toolbar {
+          color: var(--app-header-text-color);
+          background-color: var(--app-header-background-color);
+        }
+
+        .toolbar-top {
+          /* Need to set to 20px to avoid the swipe-open-area */
+          padding: 0px 20px;
+          height: var(--app-header-height);
+        }
+
+        .toolbar-top-content {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+
+        .menu-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0px;
+          fill: var(--app-header-text-color);
+          height: var(--app-grid-2hx);
+          width: var(--app-grid-2hx);
+        }
+
+        .menu-btn > svg {
+          height: var(--app-grid-2hx);
+          width: var(--app-grid-2hx);
+        }
+
+        .title {
+          padding: 0px 0px 0px var(--app-grid-2hx);
+        }
+
+        .toolbar-list {
+          display: none;
+          background-color: var(--app-header-menu-background-color);
+        }
+
+        .toolbar-list > a {
+          display: inline-block;
+          color: var(--app-header-menu-text-color);
+          text-decoration: none;
+          line-height: 30px;
+          padding: 4px 24px;
+        }
+
+        .toolbar-list > a[selected] {
+          color: var(--app-header-menu-selected-color);
+          border-bottom: 4px solid var(--app-header-menu-selected-color);
+        }
+
         /* Workaround for IE11 displaying <main> as inline */
         main {
           display: block;
         }
 
         .main-content {
-          min-height: 100vh;
+          /* min-height: 100vh; */
+          /* padding-bottom: var(--app-footer-height); */
+          @apply --layout-flex;
+          overflow: auto;
+          overflow-y: scroll;
         }
 
         .page {
           display: none;
+          padding: 0px var(--app-grid-3x);
         }
 
         .page[active] {
@@ -163,8 +197,12 @@ class MyApp extends connect(store)(LitElement) {
         }
 
         .footer {
-          padding: 24px;
-          background: var(--app-header-background-color);
+          display: block;
+          padding: 0px;
+          margin: 0px;
+          width: 100%;
+          height: var(--app-footer-height);
+          background: var(--app-drawer-background-color);
           color: var(--app-drawer-text-color);
           text-align: center;
         }
@@ -173,9 +211,9 @@ class MyApp extends connect(store)(LitElement) {
         changes to a wide layout. */
         @media (min-width: ${MyAppGlobals.wideWidth}) {
           /* Uncomment this if you want the toolbar links to be visible when in wide view */
-          /* .toolbar-list {
+          .toolbar-list {
             display: block;
-          } */
+          }
 
           .menu-btn {
             display: none;
@@ -186,29 +224,29 @@ class MyApp extends connect(store)(LitElement) {
         }
       </style>
       <!-- Add force-narrow if you don't want to show the toolbar when in wide view -->
-      <app-drawer-layout fullbleed>
+      <app-drawer-layout fullbleed force-narrow>
         <!-- Drawer content -->
         <!-- Add swipe-open if you want the ability to swipe open the drawer -->
-        <app-drawer slot="drawer" class="drawer" swipe-open opened="${_drawerOpened}" on-opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
-          <!-- <app-toolbar class="drawer-top">Menu</app-toolbar> -->
+        <app-drawer slot="drawer" class="drawer" swipe-open?="${!_wideLayout}" opened="${_drawerOpened}" on-opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
+          <app-toolbar class="drawer-top">Menu</app-toolbar>
           <nav class="drawer-list">
-            <a selected?="${_page === 'view1'}" href="/view1">View One</a>
-            <a selected?="${_page === 'view2'}" href="/view2">View Two</a>
+            ${linkList}
           </nav>
         </app-drawer>
 
         <!-- Header content -->
-        <app-header-layout has-scrolling-region>
+        <app-header-layout fullbleed class="header-layout">
           <app-header slot="header" class="toolbar" fixed effects="waterfall">
             <app-toolbar class="toolbar-top" sticky>
-              <button class="menu-btn" title="Menu" on-click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
-              <div>${appTitle}</div>
+              <div class="toolbar-top-content">
+                <button class="menu-btn" title="Menu" on-click="${_ => store.dispatch(updateDrawerState(true))}">${barsIcon}</button>
+                <div class="title">${appTitle}</div>
+              </div>
             </app-toolbar>
 
             <!-- This gets hidden on a small screen-->
             <nav class="toolbar-list">
-              <a selected?="${_page === 'view1'}" href="/view1">View One</a>
-              <a selected?="${_page === 'view2'}" href="/view2">View Two</a>
+              ${linkList}
             </nav>
           </app-header>
 
@@ -220,7 +258,7 @@ class MyApp extends connect(store)(LitElement) {
           </main>
 
           <footer class="footer">
-            <p>Made with &hearts; by the Polymer team.</p>
+            <p>[TODO: shortcuts]</p>
           </footer>
 
           <snack-bar active?="${_snackbarOpened}">
@@ -234,12 +272,13 @@ class MyApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       appTitle: String,
-      _page: String,
       _drawerOpened: Boolean,
+      _offline: Boolean,
+      _page: String,
+      _pageList: Object,
       _snackbarOpened: Boolean,
-      _wideLayout: Boolean,
-      _offline: Boolean
-    }
+      _wideLayout: Boolean
+    };
   }
 
   constructor() {
@@ -247,6 +286,12 @@ class MyApp extends connect(store)(LitElement) {
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
+    // Setting the list of pages
+    this._pageList = [
+      {name: 'view1', title: "Home", element: 'my-view1'},
+      {name: 'view2', title: "Redux Example", element: 'my-view2'},
+      {name: 'view404', title: "404", element: 'my-view404', is404: true}
+    ];
   }
 
   _firstRendered() {
@@ -258,6 +303,7 @@ class MyApp extends connect(store)(LitElement) {
 
   _didRender(properties, changeList) {
     if ('_page' in changeList) {
+      // TODO: change this to a proper title
       const pageTitle = properties.appTitle + ' - ' + changeList._page;
       updateMetadata({
           title: pageTitle,
@@ -272,7 +318,12 @@ class MyApp extends connect(store)(LitElement) {
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._wideLayout = state.app.wideLayout;
-    this._drawerOpened = this._wideLayout || state.app.drawerOpened;
+    this._drawerOpened = state.app.drawerOpened;
+    // this._page = state.app.page;
+    // this._offline = state.app.offline;
+    // this._snackbarOpened = state.app.snackbarOpened;
+    // this._wideLayout = state.app.wideLayout;
+    // this._drawerOpened = this._wideLayout || state.app.drawerOpened;
   }
 }
 

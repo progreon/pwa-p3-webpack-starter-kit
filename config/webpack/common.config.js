@@ -112,6 +112,7 @@ module.exports = (config) => ({
       }
     }),
     new ManifestPlugin(),
+    // TODO: switch to InjectManifest Plugin? (for fonts and webcomponents-loader.js)
     new WorkboxPlugin.GenerateSW({
       // these options encourage the ServiceWorkers to get in there fast
       // and not allow any straggling "old" SWs to hang around
@@ -125,7 +126,13 @@ module.exports = (config) => ({
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
-          'file-loader'
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'img/'
+            }
+          }
         ]
       },
       {

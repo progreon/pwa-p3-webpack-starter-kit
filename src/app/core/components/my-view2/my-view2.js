@@ -18,12 +18,12 @@ store.addReducers({
 import 'SharedComponents/counter-element/counter-element';
 
 // These are the shared styles needed by this element.
-import { SharedStyles } from 'Shared/shared-styles';
+import { AppStyles } from 'Shared/app-styles';
 
 class MyView2 extends connect(store)(PageViewElement) {
   _render(props) {
     return html`
-      ${SharedStyles}
+      ${AppStyles}
       <section>
         <h2>Redux example: simple counter</h2>
         <div class="circle">${props._value}</div>
@@ -46,11 +46,13 @@ class MyView2 extends connect(store)(PageViewElement) {
     `;
   }
 
-  static get properties() { return {
-    // This is the data from the store.
-    _clicks: Number,
-    _value: Number
-  }}
+  static get properties() {
+    return {
+      // This is the data from the store.
+      _clicks: Number,
+      _value: Number
+    };
+  }
 
   // This is called every time something is updated in the store.
   _stateChanged(state) {

@@ -2,12 +2,12 @@ import { html } from '@polymer/lit-element';
 import { PageViewElement } from 'CoreComponents/page-view-element/page-view-element';
 
 // These are the shared styles needed by this element.
-import { SharedStyles } from 'Shared/shared-styles';
+import { AppStyles } from 'Shared/app-styles';
 
 class MyView1 extends PageViewElement {
   _render(props) {
     return html`
-      ${SharedStyles}
+      ${AppStyles}
       <section>
         <h2>Static page</h2>
         <p>This is a text-only page.</p>
