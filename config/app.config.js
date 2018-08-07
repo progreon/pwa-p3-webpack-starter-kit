@@ -51,10 +51,6 @@ module.exports = (production) => ({
 
     // The keys used for the local storage
     localStorageKeys: {
-      copilotUser: "copilot-user",
-      profileToken: "profile-token",
-      profileRefreshToken: "profile-refresh-token",
-      profileAuthorities: "profile-authorities"
     }
   },
 
